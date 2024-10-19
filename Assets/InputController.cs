@@ -13,11 +13,15 @@ public class InputController : MonoBehaviour
     {
         inputSystem = new InputSystem();
         move = inputSystem.FindAction("Move");
-        move.performed += OnMovePerformed;
         move.Enable();
     }
 
-    void OnMovePerformed(InputAction.CallbackContext e)
+    private void FixedUpdate()
+    {
+        if (move.IsPressed()) OnMovePerformed();
+    }
+
+    void OnMovePerformed()
     {
         Vector2 keyPressDir = move.ReadValue<Vector2>();
         controller?.Move(keyPressDir);
